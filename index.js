@@ -1,9 +1,13 @@
-function maxSubArray(nums) {
-  let maxSum = nums[0];
-  let currentSum = nums[0];
+function wiggleMaxLength(nums) {
+  if (nums.length === 0) return 0;
+  let up = 1;
+  let down = 1;
   for (let i = 1; i < nums.length; i++) {
-    currentSum = Math.max(nums[i], currentSum + nums[i]);
-    maxSum = Math.max(maxSum, currentSum);
+    if (nums[i] > nums[i - 1]) {
+      up = down + 1;
+    } else if (nums[i] < nums[i - 1]) {
+      down = up + 1;
+    }
   }
-  return maxSum;
+  return Math.max(up, down);
 }
