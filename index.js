@@ -1,13 +1,20 @@
-function rightSideView(root) {
-  if (!root) return [];
-  const result = [];
-  let level = 0;
-  const traverse = (node, level) => {
-    if (!node) return;
-    if (result[level] === undefined) result[level] = node.val;
-    traverse(node.right, level + 1);
-    traverse(node.left, level + 1);
-  };
-  traverse(root, level);
-  return result;
+function longestPalindrome(s) {
+  let longest = "";
+  for (let i = 0; i < s.length; i++) {
+    const oddPalindrome = expandAroundCenter(s, i, i);
+    const evenPalindrome = expandAroundCenter(s, i, i + 1);
+    const currentLongest =
+      oddPalindrome.length > evenPalindrome.length
+        ? oddPalindrome
+        : evenPalindrome;
+    if (currentLongest.length > longest.length) longest = currentLongest;
+  }
+  return longest;
+}
+function expandAroundCenter(s, left, right) {
+  while (left >= 0 && right < s.length && s[left] === s[right]) {
+    left--;
+    right++;
+  }
+  return s.slice(left + 1, right);
 }
